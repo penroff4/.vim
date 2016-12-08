@@ -10,6 +10,10 @@ class Channel(models.Model):
     channel_create_date = models.DateTimeField()
     record_create_date = models.DateTimeField()
     record_last_modified_date = models.DateTimeField()
+    
+    def __str__(self):
+        return '%s (%s)' % (self.channel_name, self.channel_id)
+
 
 class Video(models.Model):
     video_id = models.CharField(max_length=255, primary_key=True)
@@ -18,6 +22,9 @@ class Video(models.Model):
     video_published_date = models.DateTimeField()
     record_created_date = models.DateTimeField()
     record_last_modified_date = models.DateTimeField()
+
+    def __str__(self):
+        return '%s (%s)' % (self.video_name, self.video_id)
 
 
 class Playlist(models.Model):
@@ -28,9 +35,17 @@ class Playlist(models.Model):
     record_create_date = models.DateTimeField()
     record_last_modified_date = models.DateTimeField()
 
+    def __str__(self):
+        return '%s (%s)' % (self.playlist_name, self.playlist_id)
+
 
 class PlaylistVideo(models.Model):
     playlist_video_key = models.CharField(max_length=510, primary_key=True)
     playlist_id = models.ForeignKey(Playlist, on_delete=models.CASCADE)
     video_id = models.ForeignKey(Video, on_delete=models.CASCADE)
     has_been_posted = models.BooleanField()
+
+    def __str__(self):
+        return '%s (%s)' % (self.video_id.video_name,
+                self.playlist_id.playlist_name)
+
